@@ -1,0 +1,64 @@
+{
+    "name": "alfacode-team/hkm-plugin-legacy-passwords",
+    "description": "HKM Kernel plugin providing 'password.legacy' — verify a password against a hash another system wrote (bcrypt, Argon2, crypt(3), phpass, PBKDF2, scrypt, Firebase, salted digests, plaintext) and re-hash it on login.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "hkm-kernel",
+        "plugin",
+        "php",
+        "password",
+        "migration",
+        "scrypt",
+        "phpass",
+        "bcrypt",
+        "pbkdf2",
+        "firebase",
+        "password.legacy"
+    ],
+    "require": {
+        "php": ">=8.4",
+        "ext-hash": "*",
+        "ext-openssl": "*",
+        "alfacode-team/php-service-platform": "dev-master"
+    },
+    "suggest": {
+        "ext-sodium": "Not used by this plugin. Noted only because libsodium's scrypt binding takes opslimit/memlimit rather than N, r and p and insists on a 32-byte salt, so it CANNOT verify a Node or Firebase hash — which is why RFC 7914 is implemented here in pure PHP instead."
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11 || ^12 || ^13"
+    },
+    "autoload": {
+        "psr-4": {
+            "Plugins\\LegacyPasswords\\": ""
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/AlfaCode-Team/hkm-kernel"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/AlfaCode-Team/http"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/AlfaCode-Team/php-io-cli"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/AlfaCode-Team/Let-Migrate"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/hakrichTech/bindIt"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/hakrichTech/type-alias"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

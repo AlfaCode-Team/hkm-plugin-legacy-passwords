@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.2/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         failOnWarning="true"
+         failOnRisky="true"
+         cacheDirectory=".phpunit.cache">
+    <testsuites>
+        <!--
+            TWO SUITES, split by COST rather than by what they touch.
+
+            Everything here is a pure function — there is no database, no
+            network and no filesystem, so nothing an "integration" suite would
+            normally mean exists.
+
+            What does exist is scrypt, which is MEASURED at 1.58 seconds per
+            derivation at Firebase's parameters. A handful of those turns a
+            sub-second suite into a thirty-second one, which is the kind of
+            friction that ends with people not running it. So they live in
+            `Slow`, and `Unit` stays fast enough to run on every save:
+            run phpunit with the Unit testsuite selected while working, and
+            plain phpunit (which runs both) before pushing.
+
+            The Slow suite is NOT optional. It carries the RFC 7914 vectors and
+            the Firebase known-answer tests, which are the only evidence the
+            scrypt implementation is correct at all.
+        -->
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Slow">
+            <directory>tests/Slow</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">API</directory>
+            <directory suffix=".php">Application</directory>
+            <directory suffix=".php">Domain</directory>
+            <directory suffix=".php">Infrastructure</directory>
+        </include>
+    </source>
+</phpunit>
